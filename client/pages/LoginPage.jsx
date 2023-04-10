@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { redirect, Form } from 'react-router-dom';
+import { userContext } from '../context';
 
 const LoginPage = () => {
+
+  const { user, setUser } = useContext(userContext)
 
 	const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -39,14 +42,16 @@ const LoginPage = () => {
 	/////////////////////////////////////////////////
 
     //do we need fetch for this as well?
-    const redirectToSignupPage = () => {
-	    return redirect(`/SignupPage`);
+  const redirectToSignupPage = () => {
+    setUser('Mark');
+	    return //redirect(`/SignupPage`);
 	}
 
 
 	return (
 		<main className='simple-wrapper'>
-			<p className='simple-header'>Welcome to AllPacka!</p>
+      <p className='simple-header'>Welcome to AllPacka!</p>
+      <p>{user}</p>
 			{/* IMAGE OF AN ALPACA */}
 			<img
 				src='.../assets/alpaca_cool.jpg'

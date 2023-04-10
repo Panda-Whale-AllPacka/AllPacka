@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import LoginPage from './pages/LoginPage.jsx';
 import SignupPage from './pages/SignupPage.jsx';
 import NewTripPage from './pages/TripHome/NewTripPage.jsx';
@@ -6,7 +6,7 @@ import TripHomePage from './pages/TripHome/TripHomePage.jsx';
 import UserHomePage from './pages/UserHome/UserHomePage.jsx';
 import RootLayout from './layouts/rootLayout';
 import { createBrowserRouter, createRoutesFromElements, RouterProvider, Route } from "react-router-dom";
-
+import { tripContext, userContext } from './context.js';
 
 // ROUTE PROVIDER Component to 
 
@@ -70,12 +70,21 @@ const router = createBrowserRouter(
 
 
 const App = () => {
+
+  const [ user, setUser ] = useState('null');
+  const [ currentTrip, setCurrentTrip ] = useState(null);
+  const userValue = { user, setUser }
+  const currentTripValue = {currentTrip, setCurrentTrip}
+  // const tripContext = createContext({ currentTrip: null, setCurrentTrip: () => { } });
+  // const userContext = createContext({ user: null, setUser: () => { } });
+
   return (
-    <div>
-    <h1>I'm here</h1>
-    
-    <RouterProvider router={router}/>
-    </div>
+    <userContext.Provider value={userValue}>
+      <tripContext.Provider value={currentTripValue}>
+          <h1>I'm here</h1>
+        <RouterProvider router={router} />
+      </tripContext.Provider>
+    </userContext.Provider>
   )
 }
 

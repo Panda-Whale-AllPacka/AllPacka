@@ -14,7 +14,7 @@ const SignUpPage = () => {
 	try {
         e.preventDefault();
 
-		const res = await fetch('/users', {
+		const res = await fetch('/users/signup', {
 			method: 'POST',
 			headers: {
 			'Content-Type': 'application/json'
@@ -23,7 +23,7 @@ const SignUpPage = () => {
 		});
         // **checking to see if user is already in database
 		console.log(res)
-		if (res.status === 200) { 
+		if (res.status) { 
 			console.log('Signup successful!');
 			// return navigate(`/LoginPage`);  //where do you guys want to redirect this to
 			return navigate('/UserHomePage');

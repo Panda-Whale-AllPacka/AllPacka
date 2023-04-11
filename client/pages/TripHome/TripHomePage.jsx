@@ -61,7 +61,7 @@ const TripHomePage = ({ currentTrips }) => {
     <div className= 'trip-home-page'> 
       <header>
         <h1>Trip Home Page</h1>
-        <h3>{'EDIT ME: trip name and date GO OVER WITH MARK & BILLY. THIS IS STATIC'}</h3> 
+        {/* <h3>{'EDIT ME: trip name and date GO OVER WITH MARK & BILLY. THIS IS STATIC'}</h3>  */}
       </header>
       {/* div branch 1 ------------------------------------------------------------------------------*/}
       <div className='trip-page-info-options'>

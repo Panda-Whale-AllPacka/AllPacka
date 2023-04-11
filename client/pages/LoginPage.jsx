@@ -17,12 +17,12 @@ const LoginPage = () => {
 	try {
         e.preventDefault();
         // will this be a post request?
-		const res = await fetch('/LoginPage', {
+		const res = await fetch('/user/login', {
 			method: 'POST',
 			headers: {
 			'Content-Type': 'application/json'
 			},
-			body: JSON.stringify({ username, password })
+			body: JSON.stringify({ username: username, password: password })
 		});
 	
 		if (res.status === 200 && res.verified) {
@@ -32,7 +32,7 @@ const LoginPage = () => {
             setUsername = (''); // does this  match with the userSchema (the word User)
             setPassword = ('');
 			// return redirect(`/UserHomePage/${res.user_id}`); //!!! either user_id or username
-		  return redirect(`/UserHomePage`);
+		  return navigate(`/UserHomePage`);
 		} else {
 			alert('Invalid username or password');
 			return redirect(`/SignUpPage`); // TOD redirect

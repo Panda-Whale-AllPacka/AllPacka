@@ -64,6 +64,50 @@ button {
     background-size: cover;
 }
 
+button {
+	display: flex;
+	align-items: center;
+	flex-grow: 0;
+	flex-shrink: 0;
+	height: 3rem;
+	padding-inline: 30rem;
+
+	border-radius: 6rem;
+	border: none;
+	outline: none;
+	
+	background: white;
+	color: rgba(22, 21, 21, 0.8);
+	cursor: pointer;
+
+	font-family: $secondary-font-stack;
+	font-weight: 800;
+	font-size: 1rem;
+	line-height: 1rem;
+	letter-spacing: 0.015em;
+
+	transition: filter 100ms linear;
+
+	&.icon-button {
+		display: inline-flex;
+
+		padding: 0;
+		width: 48rem;
+
+		justify-content: center;
+		align-items: center;
+	}
+
+	&:hover,
+	&:focus {
+		filter: brightness(0.9);
+	}
+	&:active {
+		filter: brightness(0.8);
+	}
+}
+
+
 .login-header {
     font-size: 2rem;
     font-weight: bold;

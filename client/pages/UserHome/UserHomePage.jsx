@@ -7,12 +7,14 @@ I didn't have time to test.
 */
 
 
+
 import React, { useState, useContext, useEffect } from 'react';
 import { userContext } from '../../context';
 import { useNavigate } from 'react-router-dom';
-
-
-// Child Components
+import { createBrowserRouter, createRoutesFromElements, RouterProvider, Route } from "react-router-dom";
+import RootLayout from '../../layouts/rootLayout'
+import NewTripPage from '../TripHome/NewTripPage';
+import TripHomePage from '../TripHome/TripHomePage';
 import UserTripDisplay from './UserTripDisplay';
 
 function UserHomePage() {
@@ -20,6 +22,27 @@ function UserHomePage() {
   const [tripsArray, setTripsArray] = useState([]);
   const { user, setUser } = useContext(userContext);
   const navigate = useNavigate();
+
+
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path='' element={<RootLayout/>}>
+        <Route
+          index
+          element={<UserHomePage key='UserHomePage' />}
+        />
+        <Route
+          path='/NewTripPage'
+          element={<NewTripPage key='NewTripPage' />}
+        />
+        <Route
+          path='/TripHomePage'
+          element={<TripHomePage key='TripHomePage' />}
+        />
+      </Route>
+    )
+  )
+
      
   const handleCreateTrip = (e) => {
       e.preventDefault();
@@ -53,7 +76,10 @@ function UserHomePage() {
 
 
     return (
+
+      
         <div className="user-home-page">
+          
             <div className='create-trip'>
                 <button onClick={handleCreateTrip}>Create New Trip</button>
             </div>

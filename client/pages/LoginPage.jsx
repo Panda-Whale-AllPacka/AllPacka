@@ -11,6 +11,8 @@ import { userContext } from '../context';
 import '../scss/LoginPage.scss';
 import alpaca from '../assets/alpaca_cool.jpg';
 import yosemite from '../assets/yosemite.jpg';
+import { useSubmit } from 'react-router-dom';
+
 
 const LoginPage = () => {
 
@@ -18,6 +20,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState('');
   const { user, setUser } = useContext(userContext);
  	const navigate = useNavigate();
+  // const submit = useSubmit();
 
   
 	////////////////////////////////////////////
@@ -48,7 +51,8 @@ const LoginPage = () => {
         setUsername(''); 
         setPassword('');
         setUser(res.user);
-        return navigate(`/UserHomePage`);
+        console.log(res.verified)
+        navigate(`/UserHomePage`);
       } else {
         console.log(res.verified)
         alert('Invalid username or password');
@@ -94,7 +98,7 @@ const LoginPage = () => {
 			<p id='name-label' className='username-subhead'>
 				Log into AllPacka!
 			</p>
-			<Form onSubmit ={handleSubmit}>
+			<form onSubmit ={handleSubmit}>
                 <div className='username-section'>
                     <input 
                         type='text'
@@ -116,9 +120,10 @@ const LoginPage = () => {
                     />
                 </div>
                 <div id='login-button' className='login-button'>
-                    <button type='submit'>Login!</button>
+                    <button>Login!</button>
                 </div>
-			</Form>
+			</form>
+
 
             {/* redirect to sign up page with the this button */}
             <div id='sign-up-btn' className='signup-button'>

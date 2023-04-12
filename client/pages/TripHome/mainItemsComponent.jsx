@@ -54,7 +54,10 @@ const MainItemsComponent = () => {
 
 
     const categories = currentTrip.categories.map(category => {
-        return <CategoryComponent items={category.items} category={category.name} key={category.name}/>
+        return <CategoryComponent 
+        items={category.items} 
+        category={category.name} 
+        key={category.name}/>
     })
     console.log(categories)
 

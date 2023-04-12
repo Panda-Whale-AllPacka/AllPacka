@@ -7,6 +7,7 @@ import UserHomePage from './pages/UserHome/UserHomePage.jsx';
 import RootLayout from './layouts/rootLayout';
 import { createBrowserRouter, createRoutesFromElements, RouterProvider, Route,Routes, BrowserRouter } from "react-router-dom";
 import { tripContext, userContext } from './context.js';
+import { userInformation } from './context.js';
 
 // This is react 6.4 notation which allows for some extra tools like loaders to be used.
 // So far it's made more sense to do fetch requests in the functional components. So
@@ -43,17 +44,29 @@ const App = () => {
 
   const [ user, setUser ] = useState('null');
   const [ currentTrip, setCurrentTrip ] = useState('null');
-  const userValue = { user, setUser };
-  const currentTripValue = { currentTrip, setCurrentTrip };
-  
+
+  const currentTripValue = { currentTrip: currentTrip, setCurrentTrip };
+
+  const userInformation = {
+    user: user,
+    setUser
+  }
+
+
+
+
   // Using these context providers with context.js provides a way to store data accessible to
   // all children components. This way we can query the database as little as possible.
   return (
-    <userContext.Provider value={userValue}>
+    <userContext.Provider value={userInformation}>
       <tripContext.Provider value={currentTripValue}>
         <Routes>
-          <Route path='/' element={<LoginPage/>} />
-          <Route path='/SignUpPage' element={<SignupPage/>} />
+          <Route path='/' element={<LoginPage
+          user = {userInformation}
+          />} />
+          <Route path='/SignUpPage' element={<SignupPage
+          user = {userInformation}
+          />} />
           <Route path='/UserHomePage' element={<UserHomePage/>}/>
           <Route path='/NewTripPage' element={<NewTripPage/>}/> 
           <Route path='/TripHomePage' element={<TripHomePage/>}/> 

@@ -78,6 +78,7 @@ tripController.getTrip = (req, res, next) => {
 tripController.createTrip = (req, res, next) => {
   console.log('---We are in tripCharacter in characterController.js--');
   const { user_id } = req.params
+  // console.log(req.params)
 
   const {
     location,

@@ -23,27 +23,6 @@ function UserHomePage() {
   const { user, setUser } = useContext(userContext);
   const navigate = useNavigate();
 
-//   const router = [
-
-
-//       <Route path='/' element={<RootLayout/>}>,
-//         <Route
-//           index
-//           path='/UserHomePage'
-//           element={<UserHomePage key='UserHomePage' />}
-//         />
-//         <Route
-//           path='/NewTripPage'
-//           element={<NewTripPage key='NewTripPage' />}
-//         />
-//         <Route
-//           path='/TripHomePage'
-//           element={<TripHomePage key='TripHomePage' />}
-//         />
-//       </Route>
-
-// ]
-
   
 
      
@@ -55,7 +34,7 @@ function UserHomePage() {
   // NOT built yet
   const handleJoinTrip = (e) => {
       e.preventDefault();
-      // console.log(user);
+      console.log(user);
       // patch
       // TODO make functionality in backend lol
       // setCurrentTrip(returned trip)
@@ -73,9 +52,9 @@ function UserHomePage() {
   }
 
   //Checks to see when user.trips has been updated, aka loaded by useContext, and then updates state to render the trip info
-  useEffect(() => {
-    setTripsArray(makeTrips(user.trips));
-  }, [user.trips]);
+  // useEffect(() => {
+  //   setTripsArray(makeTrips(user.trips));
+  // }, [user.trips]);
 
 
     return (
@@ -83,12 +62,9 @@ function UserHomePage() {
 
       
         <div className="user-home-page"> 
-              {/* <RouterProvider router={router} /> */}
-          {/* <NavLink to='/UserHomePage'className='nav-link'> User Home Page </NavLink>
-          <NavLink to='/NewTripPage'className='nav-link'> New TripPage </NavLink>
-          <NavLink to='/TripHomePage'className='nav-link'> Trip Home Page </NavLink> */}
           <RootLayout/>
-          
+          {/* <div>testing is here: {user}</div> */}
+
             <div className='create-trip'>
                 <button onClick={handleCreateTrip}>Create New Trip</button>
             </div>

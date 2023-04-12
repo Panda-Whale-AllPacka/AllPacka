@@ -7,12 +7,17 @@ import React, { useState } from "react";
 import { redirect, Form } from "react-router-dom";
 import '../../scss/NewTripPage.scss';
 import RootLayout from "../../layouts/rootLayout";
+import { useContext } from "react";
+import { userContext } from "../../context";
 //Will have access to userId
 const newTripPage = () => {
     const [date, setDate] = useState('');
     const [location, setLocation] = useState('');
     const [tripType, setTripType] = useState('');
     const [tripName, setTripName] = useState('');
+    const { user, setUser } = useContext(userContext);
+
+    const userId = user.user_id
 
     // handler function for the input fields
     const handleLocation = (e) => {
@@ -35,8 +40,10 @@ const newTripPage = () => {
     // below neeeds user ID as a global variable to work
     const handleSubmit = (e) => {
         e.preventDefault();
+        
         // post request to server // need to get the userID 
-        fetch(`/trips/:${userId}`, {
+
+        fetch(`/api/trip/create-trip/${userId}`, {
             method: "POST",
             body: JSON.stringify({location: location, tripType: tripType, date: date, tripName: tripName})
         })

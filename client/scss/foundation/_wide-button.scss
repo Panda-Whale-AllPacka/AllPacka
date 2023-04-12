@@ -6,12 +6,12 @@ button {
 	flex-grow: 0;
 	flex-shrink: 0;
 	height: 3rem;
-	padding-inline: 30rem;
-	// width: 30%; /* include separately in appropriate scss files */
+	padding-inline: 30%;
+	margin-top: 2rem;
 
 	border-radius: 6rem;
 	border: none;
-	outline: none;
+	outline: none;  /* Is this necessary? */
 	
 	background: white;
 	color: rgba(22, 21, 21, 0.8);
@@ -20,7 +20,7 @@ button {
 	font-family: font.$secondary-font-stack;
 	font-weight: 800;
 	font-size: 1rem;
-	line-height: 1rem;
+	// line-height: 1rem;
 	letter-spacing: 0.015em;
 
 	transition: filter 100ms linear;

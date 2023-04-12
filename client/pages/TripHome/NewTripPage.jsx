@@ -6,6 +6,7 @@ support the creation of a new trip given the correct information.
 import React, { useState } from "react";
 import { redirect, Form } from "react-router-dom";
 import '../../scss/NewTripPage.scss';
+import RootLayout from "../../layouts/rootLayout";
 //Will have access to userId
 const newTripPage = () => {
     const [date, setDate] = useState('');
@@ -30,9 +31,11 @@ const newTripPage = () => {
     // this functioin send a post request to the data base to grab the _id of
     // of the new trip that was created in the database and redirects the user
     // to the tripsHome page. From there you can add items and uers, etc with put/patch requests 
+
+    // below neeeds user ID as a global variable to work
     const handleSubmit = (e) => {
         e.preventDefault();
-        // post request to server
+        // post request to server // need to get the userID 
         fetch(`/trips/:${userId}`, {
             method: "POST",
             body: JSON.stringify({location: location, tripType: tripType, date: date, tripName: tripName})
@@ -65,10 +68,14 @@ const newTripPage = () => {
 // <Form method={} action={} onSubmit={handleSubmit}> 
     return (
         // *** QUESTION: is the action leading to the correct page?
+        <div>
+            <RootLayout/>
         <main className='new-trip-page'>
+              
             <p className='title'>       Start Planning Your Dream Trip!     </p>
             <div className='container'>
-                <Form onSubmit={handleSubmit}>
+                {/* on submit right here activates the button */}
+                <form onSubmit={handleSubmit}>
                     <label>
                         <span className='question'>Where are you going?</span>
                         <input className='new-trip-text' type="text" value={location} name="location" onChange={handleLocation}/>
@@ -86,10 +93,11 @@ const newTripPage = () => {
                         <input className='new-trip-text' type="text" value={tripName} name="tripName" onChange={handleTripName}/>
                     </label>
                     <button type="submit">Create Trip!</button>
-                </Form>
+                </form>
             </div>
 
         </main>
+        </div>
     );
 };
 

@@ -95,8 +95,7 @@ tripController.createTrip = (req, res, next) => {
       .then(savedTrip => {
         res.locals.trip_id = savedTrip._id.toString(); // used for updating the user's trips array (next middleware)
         res.locals.trip = savedTrip; // grabs the _id and send to new URL
-        console.log("WE CREATED A TRIP " + res.locals.trip + " WITH " + res.locals.user_id)
-        return next();
+        // console.log("WE CREATED A TRIP " + res.locals.trip + " WITH " + res.locals.user_id)
       })
       .catch((err) => {
           return next(createErr({
@@ -105,6 +104,22 @@ tripController.createTrip = (req, res, next) => {
           err, 
           }));
       });
+
+  User.findById(user_id)
+    .then(foundUser => {
+      console.log(foundUser)
+      console.log(tripName)
+      foundUser.trips.push({ tripName: tripName, date: date })
+      foundUser.save()
+      return next()
+    })
+    .catch((err) => {
+      return next(createErr({
+        method: 'updateUserTrip',
+        type: 'adding newTrip to user in mongoDB data',
+        err, 
+      }))
+    })
   // return next();
 };
 
@@ -174,23 +189,13 @@ tripController.updateTripUsers = async (req, res, next) => {
 //Tested and it works!
 tripController.updateTripDetails = async (req, res, next) => {
   console.log('---We are in updatedTripDetails in tripController.js----');
-  const { trip_id, trips } = req.body
-  console.log("THIS IS THE TRIP ID: " + trip_id)
-  console.log("THIS IS THE TRIP INFO: " + trips)
+  const { trip_id, trip } = req.body
 
-  // const filter = { _id: trip_id };
-  //trying to access user trip array below
-
-  //Call Use.FindOne to get User
-  //Create a new variable, assign it to the trips property within user
-  //Using new variable, call down Trip.findOneAndReplace to update desired trip
-  //Possibly replace User trips array with new variable? 
-
-  const userTripArray = { _id: trip_id };
-  const update = trips;
+  const filter = { _id: trip_id };
+  const update = trip;
 
   try {
-    const replacedTrip = await Trip.findOneAndReplace(filter, update, { upsert: true, new: true })
+    const replacedTrip = await Trip.findOneAndUpdate(filter, update, { new: true })
   
     if (replacedTrip === null) {
       return next(createErr({
@@ -219,27 +224,57 @@ tripController.deleteTrip = (req, res, next) => {
     console.log('---We are in deleteTrip in tripController.js----');
 
     const { _id } = req.params;
+    console.log(_id)
 
     Trip.findByIdAndDelete(_id)
     .then(trip => {
+      console.log(trip)
       const { 
-          location, type,
-          date, items,
-          users, catagories, review,
-          photos } = trip
+        tripName,
+        location, 
+        date, 
+        items,
+        users,
+        catagories,
+        photos,
+        id} = trip
+      // const { 
+      //   tripName,
+      //   location, 
+      //   tripType,
+      //   date, 
+      //   items,
+      //   users, 
+      //   catagories, 
+      //   review,
+      //   photos } = trip
 
-      res.locals.trip = { 
-          location, type,
-          date, items,
-          users, catagories, review,
-          photos };
+      res.locals.deletedTrip = { 
+        tripName,
+        location, 
+        date, 
+        items,
+        users, 
+        catagories, 
+        photos,
+        id};
+      // res.locals.trip = { 
+      //   tripName,
+      //   location, 
+      //   tripType,
+      //   date, 
+      //   items,
+      //   users, 
+      //   catagories, 
+      //   review,
+      //   photos};
 
       return next();
     })
     .catch((err) => {
       return next(createErr({
-        method: 'getTrip',
-        type: 'retrieving Trip mongoDB data',
+        method: 'deleteTrip',
+        type: 'deleting Trip mongoDB data',
         err, 
       }));
     });

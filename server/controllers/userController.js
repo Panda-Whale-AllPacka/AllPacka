@@ -20,7 +20,6 @@ userController.createUser = (req, res, next) => {
   const { username, password } = req.body; // verification will hash the password in DB
   // leaving it as user object in hopes that we add a nickname, and then put that in the object too
   // otherwise we could just send back res.locals.username = username
-
   const newUser = new User({ username, password });
 
   newUser.save()
@@ -28,6 +27,7 @@ userController.createUser = (req, res, next) => {
       res.locals.verified = true;
       const { username, trips , id } = savedUser
       res.locals.user = { username, trips, user_id: id };
+      console.log('WE ARE HERE FOR NEW USER' + res.locals.user)
       return next();
     })
     .catch((err) => {
@@ -76,7 +76,7 @@ userController.getUser = (req, res, next) => {
       }
 
       const { username, trips } = foundUser;
-      res.locals.user = { username, trips };
+      res.locals.userData = { username, trips };
       return next();
     })
     .catch((err) => {
@@ -128,14 +128,16 @@ userController.verifyUser = async (req, res, next) => {
   }
 }
 
+//This method is adding a new trip to the user, not updating trip information
 
 userController.updateUserTrips = async (req, res, next) => {
   console.log('---We are in updateUserTrips in userController.js--');
-
-  const user_id = req.body.user_id || res.locals.user_id;
-  const trip_id = req.body.trip_id || res.locals.trip_id; // grab the trip
-  const date = req.body.date || res.locals.trip.date  // grabs date of trip
-  const tripName = req.body.tripName || res.locals.trip.tripName // grabs the name of the trip
+  console.log(res.locals.user)
+  
+  const user_id = req.body.user_id //|| res.locals.user_id;
+  // const trip_id = req.body.trips_id //|| res.locals.trips_id; // grab the trip || Not necessary, ID is auto generated
+  const date = req.body.date //|| res.locals.trips.date  // grabs date of trip
+  const tripName = req.body.tripName //|| res.locals.trips.tripName // grabs the name of the trip
   
   //TODO
   // Should either error check for trip_id, date, or tripName being undefined here or make them
@@ -167,6 +169,7 @@ userController.updateUserTrips = async (req, res, next) => {
     }
 
     res.locals.updatedUser = updatedUser;
+    // console.log("WE ARE HERE UDPATING " + res.locals.updatedUser)
     return next();
 
   } catch (err) {
@@ -183,7 +186,7 @@ userController.updateUserTrips = async (req, res, next) => {
 userController.deleteUser = (req, res, next) => {
   console.log('---We are in deleteUser in userController.js----');
 
-  const { _id } = req.params; 
+  const { _id } = req.params;
   console.log(_id);
 
   User.findByIdAndDelete(_id)

@@ -48,7 +48,7 @@ const tripSchema = new Schema({
   tripName: String,
   location: String,
   tripType: String, // example: car camping backpacking, etc These can later be refactored to their own schema but int he interest in time... -|_:)_/-
-  date: Date, // not sure if there is a date type, look into
+  date: Date, // not sure if there is a date type, look into || PW:DATE FORMAT DOES EXIST
   items: Array, // This is an array of the objects with the item as the key and the person(s) bring it the value
   users: [{
     user_id: {

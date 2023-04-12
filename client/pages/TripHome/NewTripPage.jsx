@@ -43,7 +43,7 @@ const newTripPage = () => {
         
         // post request to server // need to get the userID 
 
-        fetch(`/trips/:${userId}`, {
+        fetch(`/api/trip/create-trip/${userId}`, {
             method: "POST",
             body: JSON.stringify({location: location, tripType: tripType, date: date, tripName: tripName})
         })

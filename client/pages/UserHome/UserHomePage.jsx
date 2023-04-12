@@ -11,37 +11,40 @@ I didn't have time to test.
 import React, { useState, useContext, useEffect } from 'react';
 import { userContext } from '../../context';
 import { useNavigate } from 'react-router-dom';
-import { createBrowserRouter, createRoutesFromElements, RouterProvider, Route } from "react-router-dom";
+import { createBrowserRouter, createRoutesFromElements, RouterProvider, Route,Routes } from "react-router-dom";
 import RootLayout from '../../layouts/rootLayout'
 import NewTripPage from '../TripHome/NewTripPage';
 import TripHomePage from '../TripHome/TripHomePage';
 import UserTripDisplay from './UserTripDisplay';
-
+import { NavLink, Outlet } from "react-router-dom";
 function UserHomePage() {
   const [joinTripCode, setJoinTripCode] = useState('');
   const [tripsArray, setTripsArray] = useState([]);
   const { user, setUser } = useContext(userContext);
   const navigate = useNavigate();
 
+//   const router = [
 
-  const router = createBrowserRouter(
-    createRoutesFromElements(
-      <Route path='' element={<RootLayout/>}>
-        <Route
-          index
-          element={<UserHomePage key='UserHomePage' />}
-        />
-        <Route
-          path='/NewTripPage'
-          element={<NewTripPage key='NewTripPage' />}
-        />
-        <Route
-          path='/TripHomePage'
-          element={<TripHomePage key='TripHomePage' />}
-        />
-      </Route>
-    )
-  )
+
+//       <Route path='/' element={<RootLayout/>}>,
+//         <Route
+//           index
+//           path='/UserHomePage'
+//           element={<UserHomePage key='UserHomePage' />}
+//         />
+//         <Route
+//           path='/NewTripPage'
+//           element={<NewTripPage key='NewTripPage' />}
+//         />
+//         <Route
+//           path='/TripHomePage'
+//           element={<TripHomePage key='TripHomePage' />}
+//         />
+//       </Route>
+
+// ]
+
+  
 
      
   const handleCreateTrip = (e) => {
@@ -77,8 +80,14 @@ function UserHomePage() {
 
     return (
 
+
       
-        <div className="user-home-page">
+        <div className="user-home-page"> 
+              {/* <RouterProvider router={router} /> */}
+          {/* <NavLink to='/UserHomePage'className='nav-link'> User Home Page </NavLink>
+          <NavLink to='/NewTripPage'className='nav-link'> New TripPage </NavLink>
+          <NavLink to='/TripHomePage'className='nav-link'> Trip Home Page </NavLink> */}
+          <RootLayout/>
           
             <div className='create-trip'>
                 <button onClick={handleCreateTrip}>Create New Trip</button>

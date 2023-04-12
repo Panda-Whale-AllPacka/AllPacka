@@ -6,6 +6,7 @@ support the creation of a new trip given the correct information.
 import React, { useState } from "react";
 import { redirect, Form } from "react-router-dom";
 import '../../scss/NewTripPage.scss';
+import RootLayout from "../../layouts/rootLayout";
 //Will have access to userId
 const newTripPage = () => {
     const [date, setDate] = useState('');
@@ -67,11 +68,14 @@ const newTripPage = () => {
 // <Form method={} action={} onSubmit={handleSubmit}> 
     return (
         // *** QUESTION: is the action leading to the correct page?
+        <div>
+            <RootLayout/>
         <main className='new-trip-page'>
+              
             <p className='title'>       Start Planning Your Dream Trip!     </p>
             <div className='container'>
                 {/* on submit right here activates the button */}
-                <Form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit}>
                     <label>
                         <span className='question'>Where are you going?</span>
                         <input className='new-trip-text' type="text" value={location} name="location" onChange={handleLocation}/>
@@ -89,10 +93,11 @@ const newTripPage = () => {
                         <input className='new-trip-text' type="text" value={tripName} name="tripName" onChange={handleTripName}/>
                     </label>
                     <button type="submit">Create Trip!</button>
-                </Form>
+                </form>
             </div>
 
         </main>
+        </div>
     );
 };
 

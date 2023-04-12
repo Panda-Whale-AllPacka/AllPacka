@@ -54,7 +54,9 @@ const App = () => {
         <Routes>
           <Route path='/' element={<LoginPage/>} />
           <Route path='/SignUpPage' element={<SignupPage/>} />
-          <Route path='/UserHomePage' element={<UserHomePage/>} />
+          <Route path='/UserHomePage' element={<UserHomePage/>}/>
+          <Route path='/NewTripPage' element={<NewTripPage/>}/> 
+          <Route path='/TripHomePage' element={<TripHomePage/>}/> 
         </Routes>
       </tripContext.Provider>
     </userContext.Provider>

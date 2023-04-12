@@ -13,7 +13,7 @@ tripRouter.get('/:trip_id',
     tripController.getTrip,
     (req, res) => {
     console.log('--Sending data from tripRouter.GET\'s aynonmouns func--');
-    return res.status(200).json(res.locals); //
+    return res.status(200).json(res.locals.trip); //
     }
 );
 
@@ -29,13 +29,16 @@ tripRouter.post('/create-trip/:user_id',
     //  -updatedUser -> with updated user trips array
     //  -user_id -> user who created trip
     //  -trip_id -> the current trip_id (for redirect)
-    return res.status(200).json(res.locals); // 
+    return res.status(200).json(res.locals.trip); // 
   }
 );
 
 //Takes a trip_id and a trip in body params. This trip is the current state of the trip from the frontend
 // This route will replace the trip in the database with the trip provided in the params
-tripRouter.patch('/update',
+
+//
+
+tripRouter.patch('/update/:user_id',
   tripController.updateTripDetails,
   (req, res) => {
     console.log('--Sending data from tripRouter.PATCH\'s aynonmouns func--');

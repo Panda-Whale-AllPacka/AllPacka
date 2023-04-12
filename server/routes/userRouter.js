@@ -13,6 +13,7 @@ userRouter.post('/signup',
   userController.createUser,
   (req, res) => {
     console.log('--Sending data from userRouter.POST\'s aynonmouns func--');
+    // return res.status(200).json(res.locals);
     return res.status(200).json(res.locals);
   }
 );
@@ -22,7 +23,7 @@ userRouter.post('/login',
     userController.verifyUser,
     (req, res) => {
     console.log('--Sending data from userRouter.GET\'s aynonmouns func--');
-    return res.status(200).json(res.locals); 
+    return res.status(200).json(res.locals.user); 
     }
 );
 
@@ -31,20 +32,23 @@ userRouter.get('/:_id',
     userController.getUser,
     (req, res) => {
     console.log('--Sending data from userRouter.GET\'s aynonmouns func--');
-    return res.status(200).json(); //res.locals.userData
+    return res.status(200).json(res.locals.userData); //res.locals.userData
     }
 );
 
 
 
-// // update the trip's information
-// router.patch('/:_id',
-//   // middleware
-//   (req, res) => {
-//     console.log('--Sending data from userRouter.PATCH\'s aynonmouns func--');
-//     return res.status(200).json(); //
-//   }
-// );
+// update the trip's information
+
+//USE USER ID in URL
+userRouter.patch('/:_id',
+  // middleware
+  userController.updateUserTrips,
+  (req, res) => {
+    console.log('--Sending data from userRouter.PATCH\'s aynonmouns func--');
+    return res.status(200).json(res.locals.updatedUser); //
+  }
+);
 
 // delete user
 userRouter.delete('/:_id',

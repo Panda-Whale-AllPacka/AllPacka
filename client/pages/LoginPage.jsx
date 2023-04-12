@@ -14,13 +14,14 @@ import yosemite from '../assets/yosemite.jpg';
 import { useSubmit } from 'react-router-dom';
 
 
-const LoginPage = () => {
+const LoginPage = (props) => {
+  const {user, setUser} = props.user;
 
 	const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { user, setUser } = useContext(userContext);
+  // const {user,setUser} = useContext(userContext);
  	const navigate = useNavigate();
-  // const submit = useSubmit();
+  // const {user, setUser} = useUserContext('')
 
   
 	////////////////////////////////////////////
@@ -47,11 +48,15 @@ const LoginPage = () => {
     
       if (res.verified) {
         console.log('Authentication successful!');
-            
+        
+        console.log('context', user)
+        // console.log('response: ', res.user)
+        setUser(res.user)
+        console.log('is context updated? ',user)
         setUsername(''); 
         setPassword('');
-        setUser(res.user);
-        console.log(res.verified)
+        // console.log('user context: ',userContext)
+
         navigate(`/UserHomePage`);
       } else {
         console.log(res.verified)

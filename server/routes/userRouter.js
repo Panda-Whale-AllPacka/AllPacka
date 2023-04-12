@@ -23,7 +23,7 @@ userRouter.post('/login',
     userController.verifyUser,
     (req, res) => {
     console.log('--Sending data from userRouter.GET\'s aynonmouns func--');
-    return res.status(200).json(res.locals.user); 
+    return res.status(200).json(res.locals); 
     }
 );
 

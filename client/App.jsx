@@ -5,7 +5,7 @@ import NewTripPage from './pages/TripHome/NewTripPage.jsx';
 import TripHomePage from './pages/TripHome/TripHomePage.jsx';
 import UserHomePage from './pages/UserHome/UserHomePage.jsx';
 import RootLayout from './layouts/rootLayout';
-import { createBrowserRouter, createRoutesFromElements, RouterProvider, Route } from "react-router-dom";
+import { createBrowserRouter, createRoutesFromElements, RouterProvider, Route,Routes, BrowserRouter } from "react-router-dom";
 import { tripContext, userContext } from './context.js';
 
 // This is react 6.4 notation which allows for some extra tools like loaders to be used.
@@ -26,14 +26,14 @@ const router = createBrowserRouter(
         path='/UserHomePage'
         element={<UserHomePage key='UserHomePage' />}
       />
-      <Route
+      {/* <Route
         path='/NewTripPage'
         element={<NewTripPage key='NewTripPage' />}
       />
       <Route
         path='/TripHomePage'
         element={<TripHomePage key='TripHomePage' />}
-      />
+      /> */}
     </Route>
   )
 )
@@ -51,10 +51,17 @@ const App = () => {
   return (
     <userContext.Provider value={userValue}>
       <tripContext.Provider value={currentTripValue}>
-        <RouterProvider router={router} />
+        <Routes>
+          <Route path='/' element={<LoginPage/>} />
+          <Route path='/SignUpPage' element={<SignupPage/>} />
+          <Route path='/UserHomePage' element={<UserHomePage/>}/>
+          <Route path='/NewTripPage' element={<NewTripPage/>}/> 
+          <Route path='/TripHomePage' element={<TripHomePage/>}/> 
+        </Routes>
       </tripContext.Provider>
     </userContext.Provider>
   )
 }
 
 export default App;
+{/* //     <RouterProvider router={router} /> */}

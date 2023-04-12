@@ -11,12 +11,49 @@ const userRouter = require('./routes/userRouter');
 const PORT = 1234;
 const app = express();
 
+//PANDAWHALE TRIP INFO EXAMPLE
+// WE CREATED A TRIP {
+//   [1]   tripName: 'pandawhale japan',
+//   [1]   location: 'Japan',
+//   [1]   date: 2023-04-12T00:00:00.000Z,
+//   [1]   items: [],
+//   [1]   users: [
+//   [1]     {
+//   [1]       user_id: new ObjectId("6436ca8532f3e349898879d9"),
+//   [1]       _id: new ObjectId("6436cc819ee58e76dc2e76dc")
+//   [1]     }
+//   [1]   ],
+//   [1]   catagories: [],
+//   [1]   photos: [],
+//   [1]   _id: new ObjectId("6436cc819ee58e76dc2e76db"),
+//   [1]   __v: 0
+//   [1] } WITH 6436ca8532f3e349898879d9
+
+// {
+//   "username": "pandaw",
+//   "trips": [
+//       {
+//           "date": "2023-04-12T00:00:00.000Z",
+//           "tripName": "pandawhale japan",
+//           "trip_id": "6436cc819ee58e76dc2e76db",
+//           "_id": "6436cc819ee58e76dc2e76df"
+//       }
+//   ]
+// }
+
 // Parse all requests
 app.use(express.json());
 app.use(express.urlencoded({ extended: true })); // important for forms!!
 
+// const MONGO_URI = process.env.MARK_ALLPACKADB_MONGO_URL;
+
 const MONGO_URI =
   'mongodb+srv://timmy:allpacka@iteration.k9ltgco.mongodb.net/?retryWrites=true&w=majority';
+// const MONGO_URI ="mongodb+srv://markteets:YpbIlMkXeLofYQrV@allpackadb.79xwnq2.mongodb.net/?retryWrites=true&w=majority"
+// const MONGO_URI = process.env.MARK_ALLPACKADB_MONGO_URL;
+
+// const MONGO_URI = 'error maker'
+
 mongoose
   .connect(MONGO_URI, {
     // options for the connect method to parse the URI

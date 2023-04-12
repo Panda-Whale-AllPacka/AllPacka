@@ -44,6 +44,7 @@ const SignUpPage = () => {
         setPassword('');
 
         setUser(res.user);
+        console.log(res.user)
         
         return navigate(`/UserHomePage`);
       } else {
@@ -67,7 +68,7 @@ const SignUpPage = () => {
 			{/* <p id='name-label' className='simple-subhead'>
 				What's your username?
   </p> */}
-			<Form onSubmit ={handleSubmit}>
+			<form onSubmit ={handleSubmit}>
                 <div className='username-box'>
                     <span>What will your username be?</span>
                     <input 
@@ -92,7 +93,7 @@ const SignUpPage = () => {
                 <div id='sign-up-btn' className='signup-button'>
                     <button type='submit'>Create Your AllPacka Account!</button>
                 </div>
-			</Form>
+			</form>
 		</main>
 	);
   

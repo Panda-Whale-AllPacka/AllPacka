@@ -130,13 +130,15 @@ userController.verifyUser = async (req, res, next) => {
 
 //This method is adding a new trip to the user, not updating trip information
 
+//try to update only users info (like username and trips)
+
 userController.updateUserTrips = async (req, res, next) => {
   console.log('---We are in updateUserTrips in userController.js--');
-  console.log(res.locals.user)
+  // console.log(res.locals.user)
   
   const user_id = req.body.user_id //|| res.locals.user_id;
-  // const trip_id = req.body.trips_id //|| res.locals.trips_id; // grab the trip || Not necessary, ID is auto generated
-  const date = req.body.date //|| res.locals.trips.date  // grabs date of trip
+  const trip_id = req.body.trip_id //|| res.locals.trips_id; // grab the trip
+  // const date = req.body.date //|| res.locals.trips.date  // grabs date of trip
   const tripName = req.body.tripName //|| res.locals.trips.tripName // grabs the name of the trip
   
   //TODO
@@ -144,11 +146,17 @@ userController.updateUserTrips = async (req, res, next) => {
   // required in the schema. We should at least check for trip_id, maybe the others are ok being null
 
   const filter = user_id;
+  // const update = {tripName: tripName, date: date, trip_id: trip_id }
+  // const updateTrip = {trip_id: trip_id}
+  // User.update(updateTrip, {$set: {'trips.$.tripName': tripName} } )
 
   try {
     // find the user based on the Id
+    //filter instead of user_id
     const foundUser = await User.findById(filter).exec()
-
+    
+    // const updatedUser = await User.update(update)
+    
     if (foundUser === null) {
       return next(createErr({
           method: 'updateUserTrips',
@@ -157,7 +165,30 @@ userController.updateUserTrips = async (req, res, next) => {
       }));
     }
 
-    foundUser.trips.push({ tripName: tripName, date: date, trip_id: trip_id})
+    const userTripsArray = foundUser.trips; //Trips array within the user
+
+    for(let i = 0; i < userTripsArray.length; i++){
+      // console.log(userTripsArray[i]._id)
+      // console.log(trip_id)
+      let cacheID = userTripsArray[i]._id;
+      // console.log("THIS IS THE" + cacheID)
+      // console.log(cacheID.valueOf()) //object right now
+      // console.log(trip_id) //string right now
+      if(cacheID.valueOf() === trip_id){
+        // console.log("ENETERED IF STATEMENT")
+        userTripsArray[i].tripName = tripName;
+        userTripsArray[i].date = date;
+      }
+    }
+
+    foundUser.trips = userTripsArray;
+
+    // console.log(foundUser.trips)
+    // const update = req.body; //Information that we want to udpate with
+
+    // const updatedUser = await User.findByIdAndUpdate(trip_id, update, { new: true })
+
+    // foundUser.trips.push({ tripName: tripName, date: date, trip_id: trip_id})
     const updatedUser = await foundUser.save();
 
     if (updatedUser === null) {
@@ -190,10 +221,10 @@ userController.deleteUser = (req, res, next) => {
   console.log(_id);
 
   User.findByIdAndDelete(_id)
-    .then(student => {
-      console.log(student);
-      const { firstName, lastName, age } = student;
-      res.locals.student = { firstName, lastName, age };
+    .then(user => {
+      console.log(user);
+      const { username, password, trips } = user;
+      res.locals.deletedUser = { username, password, trips };
       return next();
     })
     .catch((err) => {

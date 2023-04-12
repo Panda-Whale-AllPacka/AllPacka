@@ -44,8 +44,8 @@ const App = () => {
 
   const [ user, setUser ] = useState('null');
   const [ currentTrip, setCurrentTrip ] = useState('null');
-  // const userValue = { user };
-  const currentTripValue = { currentTrip, setCurrentTrip };
+
+  const currentTripValue = { currentTrip: currentTrip, setCurrentTrip };
 
   const userInformation = {
     user: user,
@@ -54,14 +54,14 @@ const App = () => {
 
 
 
+
   // Using these context providers with context.js provides a way to store data accessible to
   // all children components. This way we can query the database as little as possible.
   return (
     <userContext.Provider value={userInformation}>
-      {/* <tripContext.Provider value={currentTripValue}> */}
+      <tripContext.Provider value={currentTripValue}>
         <Routes>
           <Route path='/' element={<LoginPage
-
           user = {userInformation}
           />} />
           <Route path='/SignUpPage' element={<SignupPage
@@ -71,7 +71,7 @@ const App = () => {
           <Route path='/NewTripPage' element={<NewTripPage/>}/> 
           <Route path='/TripHomePage' element={<TripHomePage/>}/> 
         </Routes>
-      {/* </tripContext.Provider> */}
+      </tripContext.Provider>
     </userContext.Provider>
   )
 }

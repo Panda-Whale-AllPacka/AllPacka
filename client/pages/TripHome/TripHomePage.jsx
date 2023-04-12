@@ -29,6 +29,7 @@ import React, {useState, useContext} from "react";
 import MainItemsComponent from "./MainItemsComponent";
 import CategoryComponent from "./CategoryComponent";
 import { tripContext, userContext } from '../../context';
+import RootLayout from "../../layouts/rootLayout";
 // import 
 //QUESTIONS: are className "simpe-sections" labeled that way on purpose? I edited some
 
@@ -83,6 +84,7 @@ const TripHomePage = () => {
 
     // main div
     <div className= 'trip-home-page'> 
+    <RootLayout/>
       <header>
         <h1>Trip Home Page</h1>
         {/* <h3>{'EDIT ME: trip name and date GO OVER WITH MARK & BILLY. THIS IS STATIC'}</h3>  */}

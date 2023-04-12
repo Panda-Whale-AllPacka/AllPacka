@@ -1,0 +1,39 @@
+// div.root-layout
+//   header
+//     nav #main-nav
+//       NavLink.nav-link
+
+// .root-layout {
+// }
+
+header {
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+#main-nav {
+  display: flex;
+  justify-content: space-around;
+  background-color: rgb(50, 60, 171);
+  padding: 1rem 0;
+}
+
+.nav-link {
+  font-family: "Monaco", monospace;
+  font-size: 1.5rem;
+  color: white;
+  text-decoration: none;
+  &:link {
+    color: white;
+  }
+  // &:visited {
+  //   color: lightcyan;
+  // }
+  &:hover, &:focus {
+    color: yellow;
+  }
+  &.active {
+color:rgb(232, 196, 148)  }
+}

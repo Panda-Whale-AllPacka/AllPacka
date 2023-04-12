@@ -56,7 +56,25 @@ tripController.getTrip = (req, res, next) => {
       });
 }
 
-// create a new trip
+//PANDAWHALE TRIP INFO EXAMPLE
+// WE CREATED A TRIP {
+//   [1]   tripName: 'pandawhale japan',
+//   [1]   location: 'Japan',
+//   [1]   date: 2023-04-12T00:00:00.000Z,
+//   [1]   items: [],
+//   [1]   users: [
+//   [1]     {
+//   [1]       user_id: new ObjectId("6436ca8532f3e349898879d9"),
+//   [1]       _id: new ObjectId("6436cc819ee58e76dc2e76dc")
+//   [1]     }
+//   [1]   ],
+//   [1]   catagories: [],
+//   [1]   photos: [],
+//   [1]   _id: new ObjectId("6436cc819ee58e76dc2e76db"),
+//   [1]   __v: 0
+//   [1] } WITH 6436ca8532f3e349898879d9
+
+// create a new trip || Not creating a new trip, we are getting trip information and updating it
 tripController.createTrip = (req, res, next) => {
   console.log('---We are in tripCharacter in characterController.js--');
   const { user_id } = req.params
@@ -77,6 +95,7 @@ tripController.createTrip = (req, res, next) => {
       .then(savedTrip => {
         res.locals.trip_id = savedTrip._id.toString(); // used for updating the user's trips array (next middleware)
         res.locals.trip = savedTrip; // grabs the _id and send to new URL
+        console.log("WE CREATED A TRIP " + res.locals.trip + " WITH " + res.locals.user_id)
         return next();
       })
       .catch((err) => {
@@ -154,11 +173,21 @@ tripController.updateTripUsers = async (req, res, next) => {
 
 //Tested and it works!
 tripController.updateTripDetails = async (req, res, next) => {
+  console.log('---We are in updatedTripDetails in tripController.js----');
+  const { trip_id, trips } = req.body
+  console.log("THIS IS THE TRIP ID: " + trip_id)
+  console.log("THIS IS THE TRIP INFO: " + trips)
 
-  const { trip_id, trip } = req.body
+  // const filter = { _id: trip_id };
+  //trying to access user trip array below
 
-  const filter = { _id: trip_id };
-  const update = trip;
+  //Call Use.FindOne to get User
+  //Create a new variable, assign it to the trips property within user
+  //Using new variable, call down Trip.findOneAndReplace to update desired trip
+  //Possibly replace User trips array with new variable? 
+
+  const userTripArray = { _id: trip_id };
+  const update = trips;
 
   try {
     const replacedTrip = await Trip.findOneAndReplace(filter, update, { upsert: true, new: true })
@@ -172,6 +201,7 @@ tripController.updateTripDetails = async (req, res, next) => {
     }
     
     res.locals.replacedTrip = replacedTrip;
+    console.log(res.locals.replacedTrip)
     return next();
     
   } catch (err) {

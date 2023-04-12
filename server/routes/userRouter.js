@@ -23,6 +23,14 @@ userRouter.post('/login',
     }
 );
 
+userRouter.post('/login',
+    userController.verifyUser,
+    (req, res) => {
+    console.log('--Sending data from userRouter.GET\'s aynonmouns func--');
+    return res.status(200).json(res.locals); 
+    }
+);
+
 // get a user's info
 userRouter.get('/:_id', userController.getUser, (req, res) => {
   console.log("--Sending data from userRouter.GET's aynonmouns func--");
@@ -43,10 +51,14 @@ userRouter.patch(
 );
 
 // delete user
-userRouter.delete('/:_id', userController.deleteUser, (req, res) => {
-  console.log("--Sending data from charaRouter.DELETE's aynonmouns func--");
-  return res.status(200).json(res.locals.deletedCharacter); // We need to send back the updated character's object (so the client can re-render)
-});
+userRouter.delete('/:_id',
+  userController.deleteUser,
+  (req, res) => {
+    console.log('--Sending data from charaRouter.DELETE\'s aynonmouns func--');
+    return res.status(200).json(res.locals.deletedUser); // We need to send back the updated character's object (so the client can re-render)
+  }
+);
+
 
 // EXPORT THE ROUTER!!!
 module.exports = userRouter;

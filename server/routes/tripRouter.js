@@ -21,7 +21,7 @@ tripRouter.get('/:trip_id',
 // this :_id is the user's _id
 tripRouter.post('/create-trip/:user_id',
   tripController.createTrip,
-  userController.updateUserTrips,
+  // userController.updateUserTrips,
   (req, res) => {
     console.log('--Sending data from tripRouter.POST\'s aynonmouns func--');
     //res.locals keys
@@ -37,8 +37,7 @@ tripRouter.post('/create-trip/:user_id',
 // This route will replace the trip in the database with the trip provided in the params
 
 //
-
-tripRouter.patch('/update/:user_id',
+tripRouter.patch('/update',
   tripController.updateTripDetails,
   (req, res) => {
     console.log('--Sending data from tripRouter.PATCH\'s aynonmouns func--');
@@ -60,11 +59,11 @@ tripRouter.patch('/:trip_id',
 */
 
 // delete a trip : (
-tripRouter.delete('/:trip_id',
-tripController.deleteTrip,
+tripRouter.delete('/:_id',
+  tripController.deleteTrip,
   (req, res) => {
     console.log('--Sending data from tripRouter.DELETE\'s aynonmouns func--');
-    return res.status(200).json(); // 
+    return res.status(200).json(res.locals.deletedTrip); // 
   }
 );
 

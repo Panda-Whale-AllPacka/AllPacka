@@ -1,47 +1,72 @@
 const express = require('express');
+const cookieParser = require('cookie-parser')
 
 const userController = require('../controllers/userController');
 const tripController = require('../controllers/tripController');
 const sessionController = require('../controllers/sessionController');
-const cookieController = require('../controllers/cookieController')
+const cookieController = require('../controllers/cookieController');
 
-const router = express.Router();
+const userRouter = express.Router();
 
-// get a user's info
-router.get('/:_id',
-    userController.getUser,
+// save a new user
+userRouter.post('/signup', userController.createUser, 
+sessionController.startSession, 
+cookieController.setCookie, 
+(req, res) => {
+  console.log("--Sending data from userRouter.POST's aynonmouns func--");
+  return res.status(200).json(res.locals);
+});
+
+//verify login info
+// userRouter.post('/login',
+//     userController.verifyUser,
+//     (req, res) => {
+//     console.log('--Sending data from userRouter.GET\'s aynonmouns func--');
+//     return res.status(200).json(res.locals); 
+//     }
+// );
+
+userRouter.post('/login',
+    userController.verifyUser,
+    sessionController.startSession,
+    cookieController.setSSIDCookie,
+    // sessionController.isLoggedIn,
     (req, res) => {
     console.log('--Sending data from userRouter.GET\'s aynonmouns func--');
-    return res.status(200).json(); //res.locals.userData
+    return res.status(200).json(res.locals); 
     }
 );
 
-// save a new user
-router.post('/',
-  userController.createUser,
+// get a user's info
+userRouter.get('/:_id', sessionController.isLoggedIn, userController.getUser, (req, res) => {
+  console.log("--Sending data from userRouter.GET's aynonmouns func--");
+  return res.status(200).json(res.locals.userData); //res.locals.userData
+});
+
+// update the trip's information
+
+//USE USER ID in URL
+userRouter.patch(
+  '/:_id',
+  // middleware
+  userController.updateUserTrips,
   (req, res) => {
-    console.log('--Sending data from userRouter.POST\'s aynonmouns func--');
-    return res.status(200).json(res.locals.newCharacter); // Send newCharacter Data
+    console.log("--Sending data from userRouter.PATCH's aynonmouns func--");
+    return res.status(200).json(res.locals.updatedUser); //
   }
 );
 
-// // update the trip's information
-// router.patch('/:_id',
-//   // middleware
-//   (req, res) => {
-//     console.log('--Sending data from userRouter.PATCH\'s aynonmouns func--');
-//     return res.status(200).json(); //
-//   }
-// );
-
 // delete user
-router.delete('/:_id',
+userRouter.delete('/:_id',
   userController.deleteUser,
   (req, res) => {
     console.log('--Sending data from charaRouter.DELETE\'s aynonmouns func--');
-    return res.status(200).json(res.locals.deletedCharacter); // We need to send back the updated character's object (so the client can re-render)
+    return res.status(200).json(res.locals.deletedUser); // We need to send back the updated character's object (so the client can re-render)
   }
 );
 
+
+
+
 // EXPORT THE ROUTER!!!
-module.exports = router;
+module.exports = userRouter;

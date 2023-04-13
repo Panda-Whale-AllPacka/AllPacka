@@ -22,7 +22,7 @@ const UserTripDisplay = ({ tripName, date, trip_id }) => {
   return (
     <div key={trip_id}>
       <p className="white-text">
-        {tripName}: {date.substring(0, 10)}
+        {tripName}: {date}
       </p>
       <button onClick={() => selectTrip(trip_id)}>Let's Go!</button>
     </div>

@@ -78,8 +78,8 @@ const TripHomePage = () => {
     <div>
       <RootLayout />
       {/* div branch 1 ------------------------------------------------------------------------------*/}
-      <main className="trip-home-page">
-        <h1 className="title">Trip Home Page</h1>
+      <main className="page trip-home-page">
+        <h1 className="all-headers title black-text">Trip Home Page</h1>
         <div className="trip-page-info-options">
           {/* buttons within div branch 1 (separated so we can implement different positions on the page) */}
           <div className="add-item-category">

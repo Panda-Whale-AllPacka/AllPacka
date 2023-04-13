@@ -1,29 +1,6 @@
 @use 'foundation/wide-button';
 
 .trip-home-page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  // justify-content: center;
-  height: 100vh;
-  width: 100%;
-  margin: 4rem 0 0 0;
-  background-color: rgb(184, 238, 207);  /* not visible with full cover image */
-  // background-image: url('https://images.unsplash.com/photo-1551801319-ca06060f3fcc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8Y2lucXVlJTIwdGVycmV8ZW58MHx8MHx8&w=1000&q=80');
-  // background-repeat: no-repeat;
-  // background-size: cover;
-  padding: 0;
+  background-color: rgb(208, 199, 174);
 }
 
-// .title {
-//   color: white;
-//   font-family: "Monaco", monospace;
-//   // font-size: 3rem;
-//   font-weight: bold;
-//   margin: 2rem 0;
-//   display: flex;
-//   align-items: center;
-// }
-
-.category {
-}

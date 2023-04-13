@@ -49,6 +49,10 @@ function UserHomePage() {
   function makeTrips(userTripArray) {
     if (!userTripArray) return [];
     return userTripArray.map((trip) => {
+      console.log(trip);
+      const result = fetch(`/api/trip/${trip._id}`).then((res) =>
+        console.log(res)
+      );
       return (
         <UserTripDisplay
           tripName={trip.tripName}
@@ -60,9 +64,9 @@ function UserHomePage() {
   }
 
   //Checks to see when user.trips has been updated, aka loaded by useContext, and then updates state to render the trip info
-  // useEffect(() => {
-  //   setTripsArray(makeTrips(user.trips));
-  // }, [user.trips]);
+  useEffect(() => {
+    setTripsArray(makeTrips(user.trips));
+  }, [user.trips]);
 
   return (
     <div>

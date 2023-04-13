@@ -107,39 +107,39 @@ userController.verifyUser = async (req, res, next) => {
 
   try {
 
-    User.findOne({ username }).exec()
-      .then((user) => {
-        // res.locals.userid = user._id;
-        console.log(user)
-        const { username, trips, id } = user;
-        bcrypt.compare(password, user.password)
-        .then(result => {
-          console.log(result)
-          if(result === true) {
-            res.locals.user = { username, trips, user_id: id };
-            res.locals.verified = true;
-            // res.locals.isVerified = {message: 'verified'};
-          } else {
-            res.locals.isVerified = result;
-          }
-          console.log(res.locals)
-          return next();
-        })
-      })
+    // User.findOne({ username }).exec()
+    //   .then((user) => {
+    //     // res.locals.userid = user._id;
+    //     console.log(user)
+    //     const { username, trips, id } = user;
+    //     bcrypt.compare(password, user.password)
+    //     .then(result => {
+    //       console.log(result)
+    //       if(result === true) {
+    //         res.locals.user = { username, trips, user_id: id };
+    //         res.locals.verified = true;
+    //         // res.locals.isVerified = {message: 'verified'};
+    //       } else {
+    //         res.locals.isVerified = result;
+    //       }
+    //       console.log(res.locals)
+    //       return next();
+    //     })
+    //   })
 
     //Non-bcrypt below
-    // const foundUser = await User.findOne({ username, password }).exec();
+    const foundUser = await User.findOne({ username, password }).exec();
 
-    // if (foundUser === null) {
-    //   res.locals.verified = false;
-    //   console.log('nomatch')
-    // } else {
-    //   res.locals.verified = true;
-    //   const { username, trips, id } = foundUser;
-    //   res.locals.user = { username, trips, user_id: id };
-    // }
+    if (foundUser === null) {
+      res.locals.verified = false;
+      console.log('nomatch')
+    } else {
+      res.locals.verified = true;
+      const { username, trips, id } = foundUser;
+      res.locals.user = { username, trips, user_id: id };
+    }
       
-    // return next();
+    return next();
     
   } catch (err) {
     return next(createErr({

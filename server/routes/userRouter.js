@@ -1,4 +1,5 @@
 const express = require('express');
+const cookieParser = require('cookie-parser')
 
 const userController = require('../controllers/userController');
 const tripController = require('../controllers/tripController');
@@ -8,23 +9,28 @@ const cookieController = require('../controllers/cookieController');
 const userRouter = express.Router();
 
 // save a new user
-userRouter.post('/signup', userController.createUser, (req, res) => {
+userRouter.post('/signup', userController.createUser, 
+sessionController.startSession, 
+cookieController.setCookie, 
+(req, res) => {
   console.log("--Sending data from userRouter.POST's aynonmouns func--");
-  // return res.status(200).json(res.locals);
   return res.status(200).json(res.locals);
 });
 
 //verify login info
-userRouter.post('/login',
-    userController.verifyUser,
-    (req, res) => {
-    console.log('--Sending data from userRouter.GET\'s aynonmouns func--');
-    return res.status(200).json(res.locals); 
-    }
-);
+// userRouter.post('/login',
+//     userController.verifyUser,
+//     (req, res) => {
+//     console.log('--Sending data from userRouter.GET\'s aynonmouns func--');
+//     return res.status(200).json(res.locals); 
+//     }
+// );
 
 userRouter.post('/login',
     userController.verifyUser,
+    sessionController.startSession,
+    cookieController.setSSIDCookie,
+    // sessionController.isLoggedIn,
     (req, res) => {
     console.log('--Sending data from userRouter.GET\'s aynonmouns func--');
     return res.status(200).json(res.locals); 
@@ -32,7 +38,7 @@ userRouter.post('/login',
 );
 
 // get a user's info
-userRouter.get('/:_id', userController.getUser, (req, res) => {
+userRouter.get('/:_id', sessionController.isLoggedIn, userController.getUser, (req, res) => {
   console.log("--Sending data from userRouter.GET's aynonmouns func--");
   return res.status(200).json(res.locals.userData); //res.locals.userData
 });
@@ -58,6 +64,8 @@ userRouter.delete('/:_id',
     return res.status(200).json(res.locals.deletedUser); // We need to send back the updated character's object (so the client can re-render)
   }
 );
+
+
 
 
 // EXPORT THE ROUTER!!!

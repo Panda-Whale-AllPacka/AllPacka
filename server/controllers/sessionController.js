@@ -22,13 +22,15 @@ sessionController.isLoggedIn = (req, res, next) => {
   // console.log(req.cookies)
   Session.findOne({cookieId: ssid})
     .then(data => {
-      // console.log('isLoggedIn data: ',data)
+      console.log('isLoggedIn data: ',data)
       // const time = Date.now() - data.createdAt;
       // if (time < 30)
       if (data) {
+        console.log("WE ARE LOGGED IN ALREADY")
         return next()
       } else {
-        res.redirect('/signup')
+        console.log('we are redirecting to signup')
+        res.redirect('/SignUpPage')
       }
     })
     .catch((err) => {
@@ -44,8 +46,9 @@ sessionController.isLoggedIn = (req, res, next) => {
 * startSession - create and save a new Session into the database.
 */
 sessionController.startSession = (req, res, next) => {
-  //write code here
-  const currSession = new Session({cookieId: res.locals._id})
+  //write code here\
+  console.log("HERHERHERE    " + res.locals.user.user_id);
+  const currSession = new Session({cookieId: res.locals.user.user_id})
   currSession.save()
     .then(data => { 
       // console.log('Session Saved: ', data)

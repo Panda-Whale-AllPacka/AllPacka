@@ -48,6 +48,7 @@ sessionController.isLoggedIn = (req, res, next) => {
 sessionController.startSession = (req, res, next) => {
   //write code here\
   console.log("HERHERHERE    " + res.locals.user.user_id);
+  console.log(res.locals)
   const currSession = new Session({cookieId: res.locals.user.user_id})
   currSession.save()
     .then(data => { 

@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
-// const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 
 
-// const SALT_WORK_FACTOR = 12;
+const SALT_WORK_FACTOR = 12;
 
 const Schema = mongoose.Schema;
 
@@ -25,20 +25,22 @@ const userSchema = new Schema({
 // The pre() method should be called on the Mongoose schema 
 // before creating the model!!
 
-// userSchema.pre('save', async function (next) {
-//   try {
-//     if (!this.isModified('password')) {
-//       return next();
-//     }
-//     // generates a random salt value that is used to hash a password
-//     const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
-//     const hashedPassword = await bcrypt.hash(this.password, salt);
-//     this.password = hashedPassword;
-//     next();
-//   } catch (err) {
-//     next(err);
-//   }
-// });
+userSchema.pre('save', async function (next) {
+  try {
+    // if (!this.isModified('password')) { // PandaWhale: Don't think we need this?
+                                          //  We should Bcrypt the password if it's not modified
+    //   return next();
+    // }
+    // generates a random salt value that is used to hash a password
+    const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
+    const hashedPassword = await bcrypt.hash(this.password, salt);
+    this.password = hashedPassword;
+    console.log("password is hashed " + this.password)
+    return next();
+  } catch (err) {
+    next(err);
+  }
+});
 
 const User = mongoose.model('User', userSchema);
 

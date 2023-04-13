@@ -2,44 +2,19 @@ const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const cookieParser = require('cookie-parser')
 dotenv.config();
 
+
 // Routers
-const tripRouter = require('./routes/tripRouter');
 const userRouter = require('./routes/userRouter');
+const tripRouter = require('./routes/tripRouter');
 
 const PORT = 1234;
 const app = express();
 
-//PANDAWHALE TRIP INFO EXAMPLE
-// WE CREATED A TRIP {
-//   [1]   tripName: 'pandawhale japan',
-//   [1]   location: 'Japan',
-//   [1]   date: 2023-04-12T00:00:00.000Z,
-//   [1]   items: [],
-//   [1]   users: [
-//   [1]     {
-//   [1]       user_id: new ObjectId("6436ca8532f3e349898879d9"),
-//   [1]       _id: new ObjectId("6436cc819ee58e76dc2e76dc")
-//   [1]     }
-//   [1]   ],
-//   [1]   catagories: [],
-//   [1]   photos: [],
-//   [1]   _id: new ObjectId("6436cc819ee58e76dc2e76db"),
-//   [1]   __v: 0
-//   [1] } WITH 6436ca8532f3e349898879d9
-
-// {
-//   "username": "pandaw",
-//   "trips": [
-//       {
-//           "date": "2023-04-12T00:00:00.000Z",
-//           "tripName": "pandawhale japan",
-//           "trip_id": "6436cc819ee58e76dc2e76db",
-//           "_id": "6436cc819ee58e76dc2e76df"
-//       }
-//   ]
-// }
+const cookieController = require('./controllers/cookieController');
+app.use(cookieParser());
 
 // Parse all requests
 app.use(express.json());
@@ -67,7 +42,7 @@ mongoose
 
 // define route handlers
 
-app.use('/api/user', userRouter); // Access to trips from here
+app.use('/api/user', userRouter, cookieController.setCookie); // Access to trips from here
 
 app.use('/api/trip', tripRouter); // The main infographic page
 

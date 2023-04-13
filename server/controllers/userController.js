@@ -117,7 +117,8 @@ userController.verifyUser = async (req, res, next) => {
           console.log(result)
           if(result === true) {
             res.locals.user = { username, trips, user_id: id };
-            res.locals.isVerified = {message: 'verified'};
+            res.locals.verified = true;
+            // res.locals.isVerified = {message: 'verified'};
           } else {
             res.locals.isVerified = result;
           }

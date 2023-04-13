@@ -3,13 +3,11 @@ import { tripContext, userContext } from '../../context';
 import { useNavigate } from 'react-router-dom';
 
 const UserTripDisplay = ({ tripName, date, trip_id }) => {
-
   const navigate = useNavigate();
   const { currentTrip, setCurrentTrip } = useContext(tripContext);
 
-
   // When a button is clicked, this function retrieves the details of the trip and sets
-  // that trip to global context for use in the TripHomePage 
+  // that trip to global context for use in the TripHomePage
   const selectTrip = async (trip_id) => {
     const response = await fetch(`/api/trip/${trip_id}`);
     if (response.status === 200) {
@@ -17,16 +15,18 @@ const UserTripDisplay = ({ tripName, date, trip_id }) => {
       setCurrentTrip(foundTrip);
       return navigate('/TripHomePage');
     } else {
-      alert('Server fail getting trip in selectTrip() in UserHomePage')
+      alert('Server fail getting trip in selectTrip() in UserHomePage');
     }
-  }
+  };
 
-return(
-  <div key={trip_id}>
-    {tripName}, {date}
-    <button onClick={() => selectTrip(trip_id)}>Let's Go!</button>
-  </div>
-    )
-}
+  return (
+    <div key={trip_id}>
+      <p className="white-text">
+        {tripName}: {date.substring(0, 10)}
+      </p>
+      <button onClick={() => selectTrip(trip_id)}>Let's Go!</button>
+    </div>
+  );
+};
 
-export default UserTripDisplay
+export default UserTripDisplay;

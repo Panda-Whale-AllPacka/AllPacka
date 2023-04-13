@@ -13,130 +13,105 @@ import alpaca from '../assets/alpaca_cool.jpg';
 import yosemite from '../assets/yosemite.jpg';
 import { useSubmit } from 'react-router-dom';
 
-
 const LoginPage = (props) => {
-  const {user, setUser} = props.user;
+  const { user, setUser } = props.user;
 
-	const [username, setUsername] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   // const {user,setUser} = useContext(userContext);
- 	const navigate = useNavigate();
+  const navigate = useNavigate();
   // const {user, setUser} = useUserContext('')
 
-  
-	////////////////////////////////////////////
-	// makes a fetch to the backend to authenticate the credentials on submit
-	async function handleSubmit(e) {
-	try {
-    
-    e.preventDefault();
-    
-    // Send the username and password to the server for authentication 
-		const response = await fetch('/api/user/login', {
-			method: 'POST',
-			headers: {
-			'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({ username, password })
-    });
+  ////////////////////////////////////////////
+  // makes a fetch to the backend to authenticate the credentials on submit
+  async function handleSubmit(e) {
+    try {
+      e.preventDefault();
 
-    console.log(response.status)
-    if(response.status === 200){
+      // Send the username and password to the server for authentication
+      const response = await fetch('/api/user/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
 
-    const res = await response.json();
-    console.log(res.verified)
-    
-      if (res.verified) {
-        console.log('Authentication successful!');
-        
-        console.log('context', user)
-        // console.log('response: ', res.user)
-        setUser(res.user)
-        console.log('is context updated? ',user)
-        setUsername(''); 
-        setPassword('');
-        // console.log('user context: ',userContext)
+      console.log(response.status);
+      if (response.status === 200) {
+        const res = await response.json();
+        console.log(res.verified);
 
-        navigate(`/UserHomePage`);
+        if (res.verified) {
+          console.log('Authentication successful!');
+
+          console.log('context', user);
+          // console.log('response: ', res.user)
+          setUser(res.user);
+          console.log('is context updated? ', user);
+          setUsername('');
+          setPassword('');
+          // console.log('user context: ',userContext)
+
+          navigate(`/UserHomePage`);
+        } else {
+          console.log(res.verified);
+          alert('Invalid username or password');
+        }
+        // return redirect(`/SignUpPage`); // TOD redirect
       } else {
-        console.log(res.verified)
-        alert('Invalid username or password');
+        alert('Server fail');
       }
-			// return redirect(`/SignUpPage`); // TOD redirect
-    } else {
-      alert('Server fail')
+    } catch (error) {
+      console.error(error);
     }
-    
-		} catch (error) {
-		console.error(error);
-		}
-	}
-	/////////////////////////////////////////////////
+  }
+  /////////////////////////////////////////////////
 
   const redirectToSignupPage = () => {
-	  return navigate(`/SignUpPage`);
-	}
+    return navigate(`/SignUpPage`);
+  };
 
+  return (
+    <main className="user-entrance-page">
+      <h1 className="all-headers black-text">Welcome to AllPacka!</h1>
+      {/* IMAGE OF AN ALPACA */}
+      <img src={alpaca} alt={'alpaca'} className="alpaca-image" />
+      <h2 className="all-headers black-text">Log into AllPacka!</h2>
+      <div className="container">
+        <form onSubmit={handleSubmit}>
+          <div className="username-section">
+            <input
+              type="text"
+              placeholder="username"
+              // placeholder="What's a good nickname?..."
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+          <div className="password-section">
+            <input
+              type="text"
+              placeholder="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') handleSubmit();
+              }}
+            />
+          </div>
+          <div id="login-button" className="login-button">
+            <button>Login!</button>
+          </div>
+        </form>
 
-	return (
-		<main className='login-page'>
-			<p className='login-header'>
-			{/* <img
-				src={alpaca}
-				alt={'alpaca'}
-				className="alpaca-image"
-			/> */}
-				Welcome to AllPacka!
-			</p>
-			{/* IMAGE OF AN ALPACA */}
-			<img
-				src={alpaca}
-				alt={'alpaca'}
-				className="alpaca-image"
-			/>
-			{/* IMAGE OF YOSEMITE */}
-			{/* <img
-				src={yosemite}
-				alt={'yosemite'}
-				className="yosemite-image"
-			/> */}
-			<p id='name-label' className='username-subhead'>
-				Log into AllPacka!
-			</p>
-			<form onSubmit ={handleSubmit}>
-                <div className='username-section'>
-                    <input 
-                        type='text'
-                        placeholder='username'
-                        // placeholder="What's a good nickname?..." 
-                        value = {username}
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
-                </div>
-                <div className='password-section'>
-                    <input 
-                        type='text'
-                        placeholder="password" 
-                        value = {password}     
-                        onChange={(e) => setPassword(e.target.value)}
-                        onKeyDown={(e) => {
-                            if (e.key === 'Enter') handleSubmit();
-                        }}
-                    />
-                </div>
-                <div id='login-button' className='login-button'>
-                    <button>Login!</button>
-                </div>
-			</form>
-
-
-            {/* redirect to sign up page with the this button */}
-            <div id='sign-up-btn' className='signup-button'>
-                <button onClick={redirectToSignupPage}>Sign-Up!</button>
-            </div>
-		</main>
-	);
-
+        {/* redirect to sign up page with the this button */}
+        {/* <div id="sign-up-btn" className="signup-button"> */}
+        <button onClick={redirectToSignupPage}>Sign-Up!</button>
+        {/* </div> */}
+      </div>
+    </main>
+  );
 };
 
 export default LoginPage;

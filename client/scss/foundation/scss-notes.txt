@@ -1,0 +1,28 @@
+Page Template
+-------------
+<div>
+    <rootLayout/>
+    <main className="new-trip-page">
+        <h1 className="title">
+        <div className="container">
+            <form>
+                <label>
+                    <span className="question">
+                    <input className="next-trip-text>
+                </label>
+                <button>
+            </form>
+        </div>
+    </main>
+<div>
+
+
+===================
+Common Declarations
+===================
+button (_wide-button)
+
+reset
+-----
+.title
+h1

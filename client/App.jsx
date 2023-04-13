@@ -5,6 +5,7 @@ import NewTripPage from './pages/TripHome/NewTripPage.jsx';
 import TripHomePage from './pages/TripHome/TripHomePage.jsx';
 import UserHomePage from './pages/UserHome/UserHomePage.jsx';
 import RootLayout from './layouts/rootLayout';
+import './scss/foundation/reset.scss';
 import { createBrowserRouter, createRoutesFromElements, RouterProvider, Route,Routes, BrowserRouter } from "react-router-dom";
 import { tripContext, userContext } from './context.js';
 import { userInformation } from './context.js';

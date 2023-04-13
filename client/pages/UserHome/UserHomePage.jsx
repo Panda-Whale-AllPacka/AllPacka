@@ -73,26 +73,33 @@ function UserHomePage() {
       <RootLayout />
       {/* <div>testing is here: {user}</div> */}
       <main className="page user-home-page">
-        <h1 className="title">Home Page</h1>
+        <h1 className="all-headers black-text title">Home Page</h1>
+        {/* <div> */}
+        {/* <button className="outside-button" onClick={handleCreateTrip}>
+          Create New Trip
+        </button> */}
+        {/* </div> */}
         <div className="container">
-          <div className="create-trip">
-            <button onClick={handleCreateTrip}>Create New Trip</button>
-          </div>
-          <div className="join-trip">
-            <input
-              type="text"
-              value={joinTripCode}
-              onChange={(e) => setJoinTripCode(e.target.value)}
-            />
-            <button onClick={handleJoinTrip}>Join Trip</button>
-          </div>
-          <div className="current-trips">
-            <h2>Currently Planning</h2>
-            {tripsArray}
-          </div>
-          <div className="past-trips">
-            <h2>Past Trips</h2>
-          </div>
+          <form onClick={handleJoinTrip}>
+            <h2 className="all-headers">Join a Trip:</h2>
+            <label>
+              <span className="question">Trip Name</span>
+              <input
+                className="user-input"
+                type="text"
+                value={joinTripCode}
+                onChange={(e) => setJoinTripCode(e.target.value)}
+              />
+            </label>
+            <button type="submit">Go!!</button>
+          </form>
+        </div>
+        <div className="container">
+          <h2 className="all-headers">Currently Planning</h2>
+          {tripsArray}
+        </div>
+        <div className="container">
+          <h2 className="all-headers">Past Trips</h2>
         </div>
       </main>
     </div>

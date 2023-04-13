@@ -60,8 +60,8 @@ const SignUpPage = () => {
   /////////////////////////////////////////////////
 
   return (
-    <main className="user-entrance-page">
-      <h2 className="all-headers black-text">All Aboard the AllPacka!</h2>
+    <main className="page user-entrance-bg">
+      <h2 className="all-headers black-text title">All Aboard the AllPacka!</h2>
       {/* <p id='name-label' className='simple-subhead'>
 				What's your username?
   </p> */}
@@ -69,26 +69,30 @@ const SignUpPage = () => {
         <form onSubmit={handleSubmit}>
           <label>
             <span className="question">What will your username be?</span>
-            <input
-              className="user-input"
-              type="text"
-              placeholder="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
+            <div className="username-section">
+              <input
+                className="user-input"
+                type="text"
+                placeholder="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </div>
           </label>
           <label>
             <span className="question">What will your password be?</span>
-            <input
-              className="user-input"
-              type="text"
-              placeholder="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') handleSubmit();
-              }}
-            />
+            <div className="password-section">
+              <input
+                className="user-input"
+                type="text"
+                placeholder="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') handleSubmit();
+                }}
+              />
+            </div>
           </label>
           {/* <div id="sign-up-btn" className="signup-button"> */}
           <button type="submit">Create Account!</button>

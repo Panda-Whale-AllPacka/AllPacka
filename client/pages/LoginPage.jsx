@@ -73,11 +73,11 @@ const LoginPage = (props) => {
   };
 
   return (
-    <main className="user-entrance-page">
-      <h1 className="all-headers black-text">Welcome to AllPacka!</h1>
+    <main className="page user-entrance-bg">
+      <h1 className="all-headers black-text title">Welcome to AllPacka!</h1>
       {/* IMAGE OF AN ALPACA */}
       <img src={alpaca} alt={'alpaca'} className="alpaca-image" />
-      <h2 className="all-headers black-text">Log into AllPacka!</h2>
+      {/* <h2 className="all-headers black-text">Log into AllPacka!</h2> */}
       <div className="container">
         <form onSubmit={handleSubmit}>
           <div className="username-section">
@@ -100,15 +100,12 @@ const LoginPage = (props) => {
               }}
             />
           </div>
-          <div id="login-button" className="login-button">
-            <button>Login!</button>
-          </div>
+          <button type="submit">Login!</button>
+          <h2 className="all-headers">OR...</h2>
+          <button onClick={redirectToSignupPage}>Sign-Up!</button>
         </form>
 
         {/* redirect to sign up page with the this button */}
-        {/* <div id="sign-up-btn" className="signup-button"> */}
-        <button onClick={redirectToSignupPage}>Sign-Up!</button>
-        {/* </div> */}
       </div>
     </main>
   );

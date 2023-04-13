@@ -27,10 +27,9 @@ const userSchema = new Schema({
 
 userSchema.pre('save', async function (next) {
   try {
-    // if (!this.isModified('password')) { // PandaWhale: Don't think we need this?
-                                          //  We should Bcrypt the password if it's not modified
-    //   return next();
-    // }
+    if (!this.isModified('password')) { // PandaWhale: 100% needed. Prevents re-hashing
+      return next();
+    }
     // generates a random salt value that is used to hash a password
     const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
     const hashedPassword = await bcrypt.hash(this.password, salt);
